@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+ <script>
+  async function loadFromPre(url) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+    const fetched = await res.text();
+    document.open();
+    document.write(fetched);
+    document.close();
+  }
+ function GetURLParam(sParam){
+    var sPageURL = window.location.search.substring(1);
+    if(window.location.href.indexOf(sParam) > -1){
+     sPageURL = sPageURL.substring(sPageURL.indexOf(sParam)+sParam.length+1);
+     if(sPageURL.indexOf('&') > -1){
+      sPageURL = sPageURL.slice(0, sPageURL.indexOf('&'));
+     }
+     return sPageURL;
+    }
+    return "";
+ }
+  const url = GetURLParam("url");
+  const target = GetURLParam("target");
+  loadFromPre(url+target).catch(err => {
+    document.body.innerText = String(err);
+  });
+ </script>
+</head>
+<noscript>REQUIRES JAVASCRIPT</noscript>
+</html>
